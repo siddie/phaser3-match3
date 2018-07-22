@@ -20,7 +20,7 @@ export default class Dessert extends GameObjects.Sprite {
     // 也可以使用 Utils.Array.GetRandom(frames)
     let randFrame = Phaser.Math.RND.pick(frames)
     
-    // 这里origin为0.5
+    // 这里origin为0.5, 感觉在前面做这件事要好点
     super(gameScene, x + tileWidth / 2, y + tileHeight / 2, textureKey, randFrame)
 
     this.row = row

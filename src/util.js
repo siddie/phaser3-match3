@@ -4,14 +4,19 @@ import { tilesConfig, tileConfig, CHECK_DIRECTION, MIN_MATCHES } from './configs
 export default class Util {
   /**
    * 二维数组坐标转Point对象(TODO: 目前仅用到x, y)
-   * @param {number} row 
-   * @param {number} col 
+   * @param {number} row
+   * @param {number} col
    */
-  static rowColToPoint(row, col) {
+  static rowColToPoint(row, col, origin = 0) {
     let { tileWidth, tileHeight, tileSpace } = tileConfig
     
     let x = col * tileWidth
     let y = row * tileHeight + row * tileSpace
+
+    if (origin) {
+      x += tileWidth * origin
+      y += tileHeight * origin
+    }
 
     return new Geom.Point(x, y)
   }
@@ -21,13 +26,11 @@ export default class Util {
    * @param {number} row
    * @param {number} col
    */
-  static rowColToIndex(row, col) {
-    let { rowsNumber, colsNumber } = tilesConfig
-    
-    let index = row * colsNumber + col
-    
-    return index
-  }
+  // static rowColToIndex(row, col) {
+  //   let { rowsNumber, colsNumber } = tilesConfig
+  //   let index = row * colsNumber + col
+  //   return index
+  // }
 
   /**
    * 判断两个甜品，是否为邻居(上下一格或左右一格)

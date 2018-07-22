@@ -11,22 +11,24 @@ export default class GameScene extends Scene {
   _height
   // Phaser.GameObjects.Container对象
   _dessertContainer
-
+  
   // Desserts实例对象
   _desserts
 
-  
-  
   // TODO: 换个属性，row col好像没用
   _swipeFromRow = null
   _swipeFromCol = null
   // 选中的甜品对象
   selectionDessert
 
+  // 每列新甜品的初始位置Map
+  _newDessertPositions = null
+
   constructor() {
     super({ key: 'Game' })
 
     this._desserts = new Desserts(this)
+    this._newDessertPositions = new Map()
   }
   
   init() {
@@ -43,7 +45,8 @@ export default class GameScene extends Scene {
   create() {
     this.add.image(this._width / 2, this._height / 2, 'background')
 
-    this.addTiles()
+    this._setupPositions()
+    this._initTiles()
 
     // 默认就是ture, 社不设置无所谓
     this.input.topOnly = true
@@ -52,6 +55,16 @@ export default class GameScene extends Scene {
     this.input.on('pointerup', this._onPointerUp, this)
 
     // this.bgSound.play()
+  }
+
+  _setupPositions() {
+    let { colsNumber, offsetX, offsetY } = tilesConfig
+    let _newDessertPositions = this._newDessertPositions
+
+    for (let col = 0; col < colsNumber; col++) {
+      let point = Util.rowColToPoint(-1, col)
+      _newDessertPositions.set(col, point)
+    }
   }
 
   _onPointerDown(pointer, currentlyOver) {
@@ -112,7 +125,7 @@ export default class GameScene extends Scene {
         
         // DO_NOT_REMOVE  : 空的Set直接 union不太好吧?
         let totalMatches = Util.unionSet(fromDessertMatches, toDessertMatches)
-
+        
         // 由于getMatches时已判断三消的最小数量，所以这里判断不为0即可
         if (totalMatches.size !== 0) {
           return this._removeMatchDesserts(totalMatches)
@@ -128,16 +141,17 @@ export default class GameScene extends Scene {
         let collapseInfo = _desserts.collapse(removedCols)
         
         // create new dessert
-        // let newDessertInfo = this._createNewDessert(removedCols)
+        let newDessertsInfo = this._createNewDesserts(removedCols)
 
         // drop
         this._dropAnim(collapseInfo)
+        this._dropAnim(newDessertsInfo)
       }
     })
   }
 
-  // 添加瓦片
-  addTiles() {
+  // 初始化甜品瓦片
+  _initTiles() {
     let { rowsNumber, colsNumber, offsetX, offsetY } = tilesConfig
     
     let tilesContainer = this.add.container(offsetX, offsetY)
@@ -212,23 +226,40 @@ export default class GameScene extends Scene {
    * @param {Dessert[]} movedDesserts 
    */
   _dropAnim(movedDesserts) {
-    
+    console.log(movedDesserts)
     for (let i = 0; i < movedDesserts.length; i++) {
       let dessert = movedDesserts[i]
+      let { row, col } = dessert
+      
+      let point = Util.rowColToPoint(row, col, 0.5)
+      
       this.tweens.add({
         targets: dessert,
-        y: this._desserts._dessertsPosMap.get(`${dessert.row}${dessert.col}`).y,
+        y: point.y,
         duration: 300
       })
     }
   }
 
-  _createNewDessert(cols) {
-    let newDessertInfo = []
+  _createNewDesserts(cols) {
+    let newDessertsInfo = []
     let _desserts = this._desserts
-
+    let _newDessertPositions = this._newDessertPositions
+    
     for (let col in cols) {
+      col = Number(col)
+      let emptyRows = _desserts.getEmptyRowsOnCol(col)
+      for (let row = emptyRows - 1; row >= 0; row--) {
+        let point = _newDessertPositions.get(col)
+        
+        let newDessert = new Dessert(this, row, col, point.x, point.y, 'desserts')
+        _desserts.setDessert(row, col, newDessert)
 
+        this._dessertContainer.add(newDessert)
+        newDessertsInfo.push(newDessert)
+      }
     }
+    
+    return newDessertsInfo
   }
 }

@@ -48,6 +48,10 @@ export default class Desserts {
       // _dessertsPosMap.set(`${row}${col}`, { x, y })
     }
   }
+  
+  setDessert(row, col, dessert) {
+    this._dessertsArr[row][col] = dessert
+  }
 
   /**
    * 已判断fromDessert和toDessert为邻居，尝试交换
@@ -105,7 +109,6 @@ export default class Desserts {
 
   getMatches(dessert, direct) {
     // let matchesInfo = new Set()
-
     let horizonalMatches = this._getMatchHorizonally(dessert, direct)
     let verticalMatches = this._getMatchVertically(dessert, direct)
     
@@ -154,7 +157,7 @@ export default class Desserts {
     } else if (isBitSet(direct, CHECK_DIRECTION.DOWN)) {
       downMatches = this._getMatchesList(dessert, 1, 0)
     }
-
+    
     Util.addArrToSet(matchesSet, upMatches)
     Util.addArrToSet(matchesSet, downMatches)
 
@@ -171,11 +174,12 @@ export default class Desserts {
     let { rowsNumber, colsNumber } = tilesConfig
     let matchesList = [ dessert ]
     
+    // 所以这里row, col必须为数字，不能是字符串
     let checkRows = row
     let checkCols = col
     // max
     // let max = checkDeltaRow == 0 ? rowsNumber : rowsNumber
-
+    
     for (let i = 1; i < MIN_MATCHES; i++) {
       checkRows += checkDeltaRow
       checkCols += checkDeltaCol
@@ -211,6 +215,7 @@ export default class Desserts {
     let collapseInfo = []
     
     for (let col in cols) {
+      col = Number(col)
       // TODO: 怎么感觉这么像排序? 快速排序试试?
       for (let row = rowsNumber - 1; row >= 0; row--) {
         // 当找到一个null元素
@@ -237,7 +242,22 @@ export default class Desserts {
     return collapseInfo
   }
 
-  getEmptyItemsOnCol(col) {
+  /**
+   * 消除坠落后，一列元素为null的行数
+   * @param {number} col
+   */
+  getEmptyRowsOnCol(col) {
+    let { rowsNumber } = tilesConfig
+    let _dessertArr = this._dessertsArr
+    let emptyRows = 0
 
+    for (let row = 0; row < rowsNumber; row++) {
+      if (_dessertArr[row][col] !== null) {
+        break
+      }
+      emptyRows++
+    }
+
+    return emptyRows
   }
 }
