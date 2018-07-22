@@ -1,0 +1,293 @@
+{
+	"textures": [
+		{
+			"image": "cookies@3x.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 98,
+				"h": 1224
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Tile@3x.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 96,
+						"h": 108
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 96,
+						"h": 108
+					}
+				},
+				{
+					"filename": "SugarCookie-Highlighted@3x.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 4,
+						"w": 96,
+						"h": 100
+					},
+					"frame": {
+						"x": 1,
+						"y": 111,
+						"w": 96,
+						"h": 100
+					}
+				},
+				{
+					"filename": "Croissant-Highlighted@3x.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 5,
+						"w": 96,
+						"h": 98
+					},
+					"frame": {
+						"x": 1,
+						"y": 213,
+						"w": 96,
+						"h": 98
+					}
+				},
+				{
+					"filename": "Cupcake-Highlighted@3x.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 10,
+						"w": 96,
+						"h": 98
+					},
+					"frame": {
+						"x": 1,
+						"y": 313,
+						"w": 96,
+						"h": 98
+					}
+				},
+				{
+					"filename": "Danish-Highlighted@3x.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 6,
+						"w": 96,
+						"h": 96
+					},
+					"frame": {
+						"x": 1,
+						"y": 413,
+						"w": 96,
+						"h": 96
+					}
+				},
+				{
+					"filename": "Donut-Highlighted@3x.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 7,
+						"w": 96,
+						"h": 94
+					},
+					"frame": {
+						"x": 1,
+						"y": 511,
+						"w": 96,
+						"h": 94
+					}
+				},
+				{
+					"filename": "SugarCookie@3x.png",
+					"rotated": true,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 6,
+						"w": 90,
+						"h": 96
+					},
+					"frame": {
+						"x": 1,
+						"y": 607,
+						"w": 90,
+						"h": 96
+					}
+				},
+				{
+					"filename": "Macaroon-Highlighted@3x.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 14,
+						"w": 94,
+						"h": 80
+					},
+					"frame": {
+						"x": 1,
+						"y": 699,
+						"w": 94,
+						"h": 80
+					}
+				},
+				{
+					"filename": "Cupcake@3x.png",
+					"rotated": true,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 13,
+						"w": 90,
+						"h": 93
+					},
+					"frame": {
+						"x": 1,
+						"y": 781,
+						"w": 90,
+						"h": 93
+					}
+				},
+				{
+					"filename": "Croissant@3x.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 8,
+						"w": 92,
+						"h": 92
+					},
+					"frame": {
+						"x": 1,
+						"y": 873,
+						"w": 92,
+						"h": 92
+					}
+				},
+				{
+					"filename": "Danish@3x.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 9,
+						"w": 91,
+						"h": 90
+					},
+					"frame": {
+						"x": 1,
+						"y": 967,
+						"w": 91,
+						"h": 90
+					}
+				},
+				{
+					"filename": "Donut@3x.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 10,
+						"w": 90,
+						"h": 88
+					},
+					"frame": {
+						"x": 1,
+						"y": 1059,
+						"w": 90,
+						"h": 88
+					}
+				},
+				{
+					"filename": "Macaroon@3x.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 108
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 17,
+						"w": 88,
+						"h": 74
+					},
+					"frame": {
+						"x": 1,
+						"y": 1149,
+						"w": 88,
+						"h": 74
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:8a48aee1bfdc7094856782a8a1cbbc49:6229fbe4a355e69ef0f204f35abcdce8:ae370e4ced2fa26065b5597b285366ee$"
+	}
+}

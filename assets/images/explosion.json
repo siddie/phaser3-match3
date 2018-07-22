@@ -1,0 +1,227 @@
+{
+	"textures": [
+		{
+			"image": "explosion.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 440,
+				"h": 441
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "explosionpink_00.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 164,
+						"h": 164
+					},
+					"spriteSourceSize": {
+						"x": 34,
+						"y": 30,
+						"w": 87,
+						"h": 96
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 87,
+						"h": 96
+					}
+				},
+				{
+					"filename": "explosionred_00.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 164,
+						"h": 164
+					},
+					"spriteSourceSize": {
+						"x": 34,
+						"y": 30,
+						"w": 87,
+						"h": 96
+					},
+					"frame": {
+						"x": 90,
+						"y": 1,
+						"w": 87,
+						"h": 96
+					}
+				},
+				{
+					"filename": "explosionpink_04.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 164,
+						"h": 164
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 24,
+						"w": 128,
+						"h": 127
+					},
+					"frame": {
+						"x": 179,
+						"y": 1,
+						"w": 128,
+						"h": 127
+					}
+				},
+				{
+					"filename": "explosionred_04.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 164,
+						"h": 164
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 24,
+						"w": 128,
+						"h": 127
+					},
+					"frame": {
+						"x": 179,
+						"y": 1,
+						"w": 128,
+						"h": 127
+					}
+				},
+				{
+					"filename": "explosionred_01.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 164,
+						"h": 164
+					},
+					"spriteSourceSize": {
+						"x": 17,
+						"y": 12,
+						"w": 128,
+						"h": 130
+					},
+					"frame": {
+						"x": 309,
+						"y": 1,
+						"w": 128,
+						"h": 130
+					}
+				},
+				{
+					"filename": "explosionpink_01.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 164,
+						"h": 164
+					},
+					"spriteSourceSize": {
+						"x": 18,
+						"y": 12,
+						"w": 126,
+						"h": 130
+					},
+					"frame": {
+						"x": 1,
+						"y": 133,
+						"w": 126,
+						"h": 130
+					}
+				},
+				{
+					"filename": "explosionpink_02.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 164,
+						"h": 164
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 2,
+						"w": 154,
+						"h": 149
+					},
+					"frame": {
+						"x": 129,
+						"y": 133,
+						"w": 154,
+						"h": 149
+					}
+				},
+				{
+					"filename": "explosionred_02.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 164,
+						"h": 164
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 2,
+						"w": 154,
+						"h": 150
+					},
+					"frame": {
+						"x": 285,
+						"y": 133,
+						"w": 154,
+						"h": 150
+					}
+				},
+				{
+					"filename": "explosionpink_03.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 164,
+						"h": 164
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 1,
+						"w": 161,
+						"h": 155
+					},
+					"frame": {
+						"x": 1,
+						"y": 285,
+						"w": 161,
+						"h": 155
+					}
+				},
+				{
+					"filename": "explosionred_03.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 164,
+						"h": 164
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 1,
+						"w": 161,
+						"h": 155
+					},
+					"frame": {
+						"x": 164,
+						"y": 285,
+						"w": 161,
+						"h": 155
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+	}
+}
