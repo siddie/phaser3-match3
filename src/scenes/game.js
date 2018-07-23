@@ -137,7 +137,6 @@ export default class GameScene extends Scene {
     }).then((res) => {
       if (res.act == 'remove') {
         let removedCols = res.removedCols
-        
         // collapse
         let collapseInfo = _desserts.collapse(removedCols)
         
@@ -149,6 +148,15 @@ export default class GameScene extends Scene {
         this._dropAnim(newDessertsInfo)
       }
     })
+  }
+
+  _chainMatch(removedCols) {
+    
+    
+    
+    // setTimeout(() => {
+    //   this._removeMatchDesserts(totalMatches)
+    // }, 1000)
   }
 
   // 初始化甜品瓦片
@@ -188,7 +196,7 @@ export default class GameScene extends Scene {
         let point = Util.rowColToPoint(row, col)
         let frame = Utils.Array.GetRandom(DESSERT_FRAMES)
         
-        while (row >= MIN_MATCHES - 1 && _desserts.getRowMatches(row, col, -1, 0, frame) || col >= MIN_MATCHES - 1 && _desserts.getColMatches(row, col, -1, 0, frame)) {
+        while (row >= MIN_MATCHES - 1 && _desserts.getHorizonalMatches(row, col, -1, 0, frame) || col >= MIN_MATCHES - 1 && _desserts.getVerticalMatches(row, col, -1, 0, frame)) {
           frame = Utils.Array.GetRandom(DESSERT_FRAMES)
         }
 

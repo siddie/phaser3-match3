@@ -8,16 +8,11 @@ export default class Desserts {
 
   // 二维数组
   _dessertsArr = null
-  
-  // 甜品的xy位置map
-  // 感觉程序很擅长做row, col -> x, y的计算，这里就不存储了
-  // _dessertsPosMap = null
 
   constructor(scene) {
     this.scene = scene
 
     this._dessertsArr = []
-    // this._dessertsPosMap = new Map()
 
     this.scene.events.on('createDessert', this._setDessert, this)
   }
@@ -121,25 +116,25 @@ export default class Desserts {
 
   _getMatchHorizonally(dessert, direct) {
     let matchesSet = new Set()
+    let { row, col, frameKey } = dessert
     let isBitSet = Util.isBitSet
 
-    let rightMathces
-    let leftMatches
+    let horizonalMatches
 
     if (isBitSet(direct, CHECK_DIRECTION.HORIZONAL)) {
-      rightMathces = this._getMatchesList(dessert, 0, 1)
-      leftMatches = this._getMatchesList(dessert, 0, -1)
+      horizonalMatches = this.getHorizonalMatches(row, col, -1, 1, frameKey)
     } else if (isBitSet(direct, CHECK_DIRECTION.RIGHT)) {
-      rightMathces = this._getMatchesList(dessert, 0, 1)
+      horizonalMatches = this.getHorizonalMatches(row, col, 0, 1, frameKey)
     } else if (isBitSet(direct, CHECK_DIRECTION.LEFT)) {
-      leftMatches = this._getMatchesList(dessert, 0, -1)
+      horizonalMatches = this.getHorizonalMatches(row, col, -1, 0, frameKey)
     }
 
-    Util.addArrToSet(matchesSet, leftMatches)
-    Util.addArrToSet(matchesSet, rightMathces)
+    Util.addArrToSet(matchesSet, horizonalMatches)
 
-    if (!Util.isMeetNum(matchesSet.size)) {
+    if (matchesSet.size < MIN_MATCHES - 1) {
       matchesSet.clear()
+    } else {
+      matchesSet.add(dessert)
     }
 
     return matchesSet
@@ -147,121 +142,44 @@ export default class Desserts {
 
   _getMatchVertically(dessert, direct) {
     let matchesSet = new Set()
+    let { row, col, frameKey } = dessert
     let isBitSet = Util.isBitSet
-    let upMatches
-    let downMatches
+
+    let verticalMatches
 
     if (isBitSet(direct, CHECK_DIRECTION.VERTICAL)) {
-      upMatches = this._getMatchesList(dessert, -1, 0)
-      downMatches = this._getMatchesList(dessert, 1, 0)
+      verticalMatches = this.getVerticalMatches(row, col, -1, 1, frameKey)
     } else if (isBitSet(direct, CHECK_DIRECTION.UP)) {
-      upMatches = this._getMatchesList(dessert, -1, 0)
+      verticalMatches = this.getVerticalMatches(row, col, -1, 0, frameKey)
     } else if (isBitSet(direct, CHECK_DIRECTION.DOWN)) {
-      downMatches = this._getMatchesList(dessert, 1, 0)
+      verticalMatches = this.getVerticalMatches(row, col, 0, 1, frameKey)
     }
     
-    Util.addArrToSet(matchesSet, upMatches)
-    Util.addArrToSet(matchesSet, downMatches)
+    Util.addArrToSet(matchesSet, verticalMatches)
 
-    if (!Util.isMeetNum(matchesSet.size)) {
+    if (matchesSet.size < MIN_MATCHES - 1) {
       matchesSet.clear()
+    } else {
+      matchesSet.add(dessert)
     }
 
     return matchesSet
   }
-
-  _getMatchesList(dessert, checkDeltaRow, checkDeltaCol) {
-    let _dessertsArr = this._dessertsArr
-    let { row, col } = dessert
-    let { rowsNumber, colsNumber } = tilesConfig
-    let matchesList = []
-    
-    // 所以这里row, col必须为数字，不能是字符串
-    let checkRows = row
-    let checkCols = col
-    // max
-    // let max = checkDeltaRow == 0 ? rowsNumber : rowsNumber
-    
-    for (let i = 1; i < MIN_MATCHES; i++) {
-      let over = true
-      checkRows += checkDeltaRow
-      checkCols += checkDeltaCol
-
-      if (checkRows >= 0 && checkRows < rowsNumber && checkCols >= 0 && checkCols < colsNumber) {
-        let checkDessert = _dessertsArr[checkRows][checkCols]
-        if (dessert.isSameDessert(checkDessert)) {
-          over = false
-          matchesList.push(checkDessert)
-        }
-      }
-
-      if (over) {
-        break
-      }
-    }
-
-    if (matchesList.length) {
-      matchesList.push(dessert)
-    }
-
-    return matchesList
-  }
-
-  // 左边是否符合消除
-  // 上边是否符合消除
+  
   /**
-   * 
+   * 查找横向匹配列表
    * @param {number} row 
    * @param {number} col
-   * @param {-1 | 0 | 1} startDeltaRow
-   * @param {-1 | 0 | 1} endDeltaRow 
+   * @param {-1 | 0} startDeltaCol 查看的相对起列始点 (MIN_MATCHES - 1) 0
+   * @param {0 | 1} endDeltaCol    查看的相对列终点  0 (MIN_MATCHES - 1)
+   * @return {Dessert[] | undefined}
    */
-  getRowMatches(row, col, startDeltaRow, endDeltaRow, frame) {
-    let { rowsNumber } = tilesConfig
-    let _dessertsArr = this._dessertsArr
-    let startRow = row + (MIN_MATCHES - 1) * startDeltaRow
-    let endRow = row + (MIN_MATCHES - 1) * endDeltaRow
-    
-    // self
-    let matchesList = []
-
-    if (startRow < 0) startRow = 0
-    if (endRow >= rowsNumber) endRow = rowsNumber - 1
-
-    for (let r = row - 1; r >= startRow; r--) {
-      let checkDessert = _dessertsArr[r][col]
-
-      if (checkDessert.frameKey !== frame) {
-        break
-      }
-
-      matchesList.push(checkDessert)
-    }
-
-    for (let r = row + 1; r <= endRow; r++) {
-      let checkDessert = _dessertsArr[r][col]
-
-      if (checkDessert.frameKey !== frame) {
-        break
-      }
-
-      matchesList.push(checkDessert)
-    }
-    
-    if (matchesList.length < MIN_MATCHES - 1) {
-      return
-    }
-
-    return matchesList
-  }
-
-  getColMatches(row, col, startDeltaCol, endDeltaCol, frame) {
+  getHorizonalMatches(row, col, startDeltaCol, endDeltaCol, frame) {
     let { colsNumber } = tilesConfig
     let _dessertsArr = this._dessertsArr
     let startCol = col + (MIN_MATCHES - 1) * startDeltaCol
     let endCol = col + (MIN_MATCHES - 1) * endDeltaCol
     
-    // self
     let matchesList = []
 
     if (startCol < 0) startCol = 0
@@ -279,6 +197,52 @@ export default class Desserts {
 
     for (let c = col + 1; c <= endCol; c++) {
       let checkDessert = _dessertsArr[row][c]
+
+      if (checkDessert.frameKey !== frame) {
+        break
+      }
+
+      matchesList.push(checkDessert)
+    }
+    
+    if (matchesList.length < MIN_MATCHES - 1) {
+      return
+    }
+
+    return matchesList
+  }
+
+  /**
+   * 查找纵向匹配列表
+   * @param {number} row 
+   * @param {number} col
+   * @param {-1 | 0} startDeltaRow 查看的相对起列始点 (MIN_MATCHES - 1) 0
+   * @param {0 | 1} endDeltaRow    查看的相对列终点  0 (MIN_MATCHES - 1)
+   * @return {Dessert[] | undefined}
+   */
+  getVerticalMatches(row, col, startDeltaRow, endDeltaRow, frame) {
+    let { rowsNumber } = tilesConfig
+    let _dessertsArr = this._dessertsArr
+    let startRow = row + (MIN_MATCHES - 1) * startDeltaRow
+    let endRow = row + (MIN_MATCHES - 1) * endDeltaRow
+    
+    let matchesList = []
+
+    if (startRow < 0) startRow = 0
+    if (endRow >= rowsNumber) endRow = rowsNumber - 1
+
+    for (let r = row - 1; r >= startRow; r--) {
+      let checkDessert = _dessertsArr[r][col]
+
+      if (checkDessert.frameKey !== frame) {
+        break
+      }
+
+      matchesList.push(checkDessert)
+    }
+
+    for (let r = row + 1; r <= endRow; r++) {
+      let checkDessert = _dessertsArr[r][col]
 
       if (checkDessert.frameKey !== frame) {
         break

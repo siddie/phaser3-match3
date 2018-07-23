@@ -1,5 +1,5 @@
 import { Geom } from 'phaser'
-import { tilesConfig, tileConfig, CHECK_DIRECTION, MIN_MATCHES } from './configs'
+import { tilesConfig, tileConfig, CHECK_DIRECTION } from './configs'
 
 export default class Util {
   /**
@@ -134,14 +134,7 @@ export default class Util {
       })
     }
   }
-  
-  static isMeetNum(size) {
-    if (size < MIN_MATCHES) {
-      return false
-    }
-    return true
-  }
-  
+
   /**
    * 某个n的某个bit位是否置1
    */
