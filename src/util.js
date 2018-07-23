@@ -118,14 +118,24 @@ export default class Util {
     })
   }
 
+  /**
+   * 合并两集合或两数组为一个集合
+   * @param {Set | Array} set1
+   * @param {Set | Array} set2
+   */
   static unionSet(set1, set2) {
-    return new Set([...set1, ...set2])
+    // return new Set([...set1, ...set2])
+    let unioned = new Set()
+    this.addArrToSet(unioned, set1)
+    this.addArrToSet(unioned, set2)
+    
+    return unioned
   }
 
   /**
    * 将数组元素添加至集合
    * @param {Set} setToAdd 
-   * @param {Array | undefined} arr 
+   * @param {Array | Set | undefined} arr 
    */
   static addArrToSet(setToAdd, arr) {
     if (arr) {
