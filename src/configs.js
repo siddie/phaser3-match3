@@ -42,7 +42,7 @@ const MIN_MATCHES = 3
 // 感觉放到level里更好
 const DESSERT_FRAMES = ['Croissant', 'Cupcake', 'Danish', 'Donut', 'Macaroon', 'SugarCookie']
 
-const EXPLOSION_KEYS = [ 'explosionpink', 'explosionred' ]
+const EXPLOSION_KEYS = ['explosionpink', 'explosionred']
 
 // ...
 const Debug = true

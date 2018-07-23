@@ -137,21 +137,20 @@ export default class GameScene extends Scene {
     }).then((res) => {
       if (res.act == 'remove') {
         let removedCols = res.removedCols
-        // collapse
-        let collapseInfo = _desserts.collapse(removedCols)
-        
-        // create new dessert
-        let newDessertsInfo = this._createNewDesserts(removedCols)
-
-        // drop
-        this._dropAnim(collapseInfo)
-        this._dropAnim(newDessertsInfo)
       }
     })
   }
 
   _chainMatch(removedCols) {
+    // collapse
+    let collapseInfo = _desserts.collapse(removedCols)
     
+    // create new dessert
+    let newDessertsInfo = this._createNewDesserts(removedCols)
+
+    // drop
+    this._dropAnim(collapseInfo)
+    this._dropAnim(newDessertsInfo)
     
     
     // setTimeout(() => {
