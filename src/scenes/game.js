@@ -49,6 +49,8 @@ export default class GameScene extends Scene {
     this._initTiles()
     this._initDesserts()
 
+    this._checkPotentialMatches()
+    
     // 默认就是ture, 社不设置无所谓
     this.input.topOnly = true
     this.input.on('pointerdown', this._onPointerDown, this)
@@ -67,6 +69,57 @@ export default class GameScene extends Scene {
       _newDessertPositions.set(col, point)
     }
   }
+
+    // 初始化甜品瓦片
+    _initTiles() {
+      let { rowsNumber, colsNumber, offsetX, offsetY } = tilesConfig
+      
+      let tilesContainer = this.add.container(offsetX, offsetY)
+      let explosionGroup = this.add.group() 
+      
+      for (let row = 0; row < rowsNumber; row++) {
+        for (let col = 0; col < colsNumber; col++) {
+          let point = Util.rowColToPoint(row, col)
+  
+          let tile = this.add.image(point.x, point.y, 'desserts', 'Tile')
+          tile.setOrigin(0, 0)
+  
+          let explosionSprite = new Explosion(this, row, col, point.x, point.y, 'explosion')
+          
+          tilesContainer.add(tile)
+          explosionGroup.add(explosionSprite, true)
+        }
+      }
+  
+      Explosions.initData(explosionGroup.getChildren())
+    }
+  
+    _initDesserts() {
+      let { rowsNumber, colsNumber, offsetX, offsetY } = tilesConfig
+  
+      let _desserts = this._desserts
+      // NOTE: 在一个container中 setDepth似乎无效。 group倒是可以
+      // swap的情况不会有tile遮住dessert的情况
+      let _dessertContainer = this._dessertContainer = this.add.container(offsetX, offsetY)
+  
+      for (let row = 0; row < rowsNumber; row++) {
+        for (let col = 0; col < colsNumber; col++) {
+          let point = Util.rowColToPoint(row, col)
+          let frame = Utils.Array.GetRandom(DESSERT_FRAMES)
+          
+          while (col >= MIN_MATCHES - 1 && _desserts.getHorizonalMatches(row, col, -1, 0, frame) || row >= MIN_MATCHES - 1 && _desserts.getVerticalMatches(row, col, -1, 0, frame)) {
+            frame = Utils.Array.GetRandom(DESSERT_FRAMES)
+          }
+  
+          let dessert = new Dessert(this, row, col, point.x, point.y, 'desserts', frame)
+          _dessertContainer.add(dessert)
+        }
+      }
+    }
+  
+    _checkPotentialMatches() {
+      
+    }
 
   _onPointerDown(pointer, currentlyOver) {
     let dessert = currentlyOver[0]
@@ -120,14 +173,13 @@ export default class GameScene extends Scene {
       
       // 交换两相同甜品直接undo
       if (!fromDessert.isSameDessert(toDessert)) {
+
         // NOTE: fromDessert, toDessert已交换
         let fromDessertMatches = _desserts.getMatches(fromDessert, fromCheckDirect)
         let toDessertMatches = _desserts.getMatches(toDessert, toCheckDirect)
         
-        // DO_NOT_REMOVE  : 空的Set直接 union不太好吧?
         let totalMatches = Util.unionSet(fromDessertMatches, toDessertMatches)
         
-        // 由于getMatches时已判断三消的最小数量，所以这里判断不为0即可
         if (totalMatches.size !== 0) {
           return this._removeMatchDesserts(totalMatches)
         }
@@ -159,11 +211,7 @@ export default class GameScene extends Scene {
         let matches = _desserts.getMatches(dessert, CHECK_DIRECTION.HORIZONAL | CHECK_DIRECTION.DOWN)
         matchesList.push(matches)
       })
-      let totalMatches = Util.unionSet(...matchesList)
-      
-      if (totalMatches.size !== 0) {
-        return this._removeMatchDesserts(totalMatches)
-      }
+      return this._unionAndRemove(matchesList)
     }).then((res) => {
       if (res && res.act == 'remove') {
         this._chainMatch(res.removedCols)
@@ -171,50 +219,17 @@ export default class GameScene extends Scene {
     })
   }
 
-  // 初始化甜品瓦片
-  _initTiles() {
-    let { rowsNumber, colsNumber, offsetX, offsetY } = tilesConfig
-    
-    let tilesContainer = this.add.container(offsetX, offsetY)
-    let explosionGroup = this.add.group() 
-    
-    for (let row = 0; row < rowsNumber; row++) {
-      for (let col = 0; col < colsNumber; col++) {
-        let point = Util.rowColToPoint(row, col)
+  /**
+   * 
+   * @param {(Set | Array | undefined)[]} setArr
+   */
+  _unionAndRemove(matchesList) {
+    // NOTE: 空的Set这里也直接 union了
+    let totalMatches = Util.unionSet(...matchesList)
 
-        let tile = this.add.image(point.x, point.y, 'desserts', 'Tile')
-        tile.setOrigin(0, 0)
-
-        let explosionSprite = new Explosion(this, row, col, point.x, point.y, 'explosion')
-        
-        tilesContainer.add(tile)
-        explosionGroup.add(explosionSprite, true)
-      }
-    }
-
-    Explosions.initData(explosionGroup.getChildren())
-  }
-
-  _initDesserts() {
-    let { rowsNumber, colsNumber, offsetX, offsetY } = tilesConfig
-
-    let _desserts = this._desserts
-    // NOTE: 在一个container中 setDepth似乎无效。 group倒是可以
-    // swap的情况不会有tile遮住dessert的情况
-    let _dessertContainer = this._dessertContainer = this.add.container(offsetX, offsetY)
-
-    for (let row = 0; row < rowsNumber; row++) {
-      for (let col = 0; col < colsNumber; col++) {
-        let point = Util.rowColToPoint(row, col)
-        let frame = Utils.Array.GetRandom(DESSERT_FRAMES)
-        
-        while (col >= MIN_MATCHES - 1 && _desserts.getHorizonalMatches(row, col, -1, 0, frame) || row >= MIN_MATCHES - 1 && _desserts.getVerticalMatches(row, col, -1, 0, frame)) {
-          frame = Utils.Array.GetRandom(DESSERT_FRAMES)
-        }
-
-        let dessert = new Dessert(this, row, col, point.x, point.y, 'desserts', frame)
-        _dessertContainer.add(dessert)
-      }
+    // 由于getMatches时已判断三消的最小数量，所以这里判断不为0即可
+    if (totalMatches.size !== 0) {
+      return this._removeMatchDesserts(totalMatches)
     }
   }
 

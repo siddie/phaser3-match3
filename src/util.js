@@ -120,7 +120,7 @@ export default class Util {
 
   /**
    * 合并集合或数组为一个集合
-   * @param {(Set | Array | undefined)[]} setArr
+   * @param {(Set | Array | undefined)[]} setArr  TODO: 感觉typescript这样写有问题...
    */
   static unionSet(...setArr) {
     // return new Set([...set1, ...set2])
