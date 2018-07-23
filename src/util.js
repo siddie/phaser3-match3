@@ -144,8 +144,4 @@ export default class Util {
     }
     return false
   }
-
-  static checkLeft() {
-
-  }
 }

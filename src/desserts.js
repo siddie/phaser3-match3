@@ -1,7 +1,6 @@
 import { tilesConfig, CHECK_DIRECTION, MIN_MATCHES } from './configs'
 import Util from './util'
 import Explosion from './explosions'
-import MatchesInfo from './matchesInfo'
 
 export default class Desserts {
   scene = null
@@ -105,7 +104,6 @@ export default class Desserts {
   }
 
   getMatches(dessert, direct) {
-    // let matchesInfo = new Set()
     let horizonalMatches = this._getMatchHorizonally(dessert, direct)
     let verticalMatches = this._getMatchVertically(dessert, direct)
     
@@ -170,8 +168,8 @@ export default class Desserts {
    * 查找横向匹配列表
    * @param {number} row 
    * @param {number} col
-   * @param {-1 | 0} startDeltaCol 查看的相对起列始点 (MIN_MATCHES - 1) 0
-   * @param {0 | 1} endDeltaCol    查看的相对列终点  0 (MIN_MATCHES - 1)
+   * @param {-1 | 0} startDeltaCol 待检查的相对起列始点 (MIN_MATCHES - 1) 0
+   * @param {0 | 1} endDeltaCol    待检查的相对列终点  0 (MIN_MATCHES - 1)
    * @return {Dessert[] | undefined}
    */
   getHorizonalMatches(row, col, startDeltaCol, endDeltaCol, frame) {
@@ -216,8 +214,8 @@ export default class Desserts {
    * 查找纵向匹配列表
    * @param {number} row 
    * @param {number} col
-   * @param {-1 | 0} startDeltaRow 查看的相对起列始点 (MIN_MATCHES - 1) 0
-   * @param {0 | 1} endDeltaRow    查看的相对列终点  0 (MIN_MATCHES - 1)
+   * @param {-1 | 0} startDeltaRow 待检查的相对行起始点 (MIN_MATCHES - 1) 0
+   * @param {0 | 1} endDeltaRow    待检查的相对行终点  0 (MIN_MATCHES - 1)
    * @return {Dessert[] | undefined}
    */
   getVerticalMatches(row, col, startDeltaRow, endDeltaRow, frame) {
