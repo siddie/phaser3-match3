@@ -119,16 +119,17 @@ export default class Util {
   }
 
   /**
-   * 合并两集合或两数组为一个集合
-   * @param {Set | Array} set1
-   * @param {Set | Array} set2
+   * 合并集合或数组为一个集合
+   * @param {(Set | Array | undefined)[]} setArr
    */
-  static unionSet(set1, set2) {
+  static unionSet(...setArr) {
     // return new Set([...set1, ...set2])
     let unioned = new Set()
-    this.addArrToSet(unioned, set1)
-    this.addArrToSet(unioned, set2)
-    
+
+    setArr.forEach((setItem) => {
+      this.addArrToSet(unioned, setItem)
+    })
+
     return unioned
   }
 

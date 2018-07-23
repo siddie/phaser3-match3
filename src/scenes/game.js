@@ -1,5 +1,5 @@
 import { GameObjects, Geom, Scene, Utils } from 'phaser'
-import { tilesConfig, tileConfig, DESSERT_FRAMES, MIN_MATCHES } from '../configs'
+import { tilesConfig, tileConfig, DESSERT_FRAMES, MIN_MATCHES, CHECK_DIRECTION } from '../configs'
 import Dessert from '../sprites/dessert'
 import Explosion from '../sprites/explosion'
 import Explosions from '../explosions'
@@ -136,8 +136,7 @@ export default class GameScene extends Scene {
       return this._undoSwap(fromDessert, toDessert)
     }).then((res) => {
       if (res.act == 'remove') {
-        let removedCols = res.removedCols
-        this._chainMatch(removedCols)
+        this._chainMatch(res.removedCols)
       }
     })
   }
@@ -146,20 +145,30 @@ export default class GameScene extends Scene {
     let _desserts = this._desserts
 
     // collapse
-    let collapseInfo = _desserts.collapse(removedCols)
+    let collapseArr = _desserts.collapse(removedCols)
     
     // create new dessert
-    let newDessertsInfo = this._createNewDesserts(removedCols)
+    let newDessertsArr = this._createNewDesserts(removedCols)
 
-    // drop
-    this._dropAnim(collapseInfo)
-    this._dropAnim(newDessertsInfo)
+    let needCheckDesserts = collapseArr.concat(newDessertsArr)
     
-    let totalMatches = Util.unionSet(collapseInfo, newDessertsInfo) 
-    console.log(totalMatches)
-    // setTimeout(() => {
-    //   this._removeMatchDesserts(totalMatches)
-    // }, 1000)
+    // drop
+    this._dropAnim(needCheckDesserts).then(() => {
+      let matchesList = []
+      needCheckDesserts.forEach((dessert) => {
+        let matches = _desserts.getMatches(dessert, CHECK_DIRECTION.HORIZONAL | CHECK_DIRECTION.DOWN)
+        matchesList.push(matches)
+      })
+      let totalMatches = Util.unionSet(...matchesList)
+      
+      if (totalMatches.size !== 0) {
+        return this._removeMatchDesserts(totalMatches)
+      }
+    }).then((res) => {
+      if (res && res.act == 'remove') {
+        this._chainMatch(res.removedCols)
+      }
+    })
   }
 
   // 初始化甜品瓦片
@@ -255,18 +264,24 @@ export default class GameScene extends Scene {
    * @param {Dessert[]} movedDesserts 
    */
   _dropAnim(movedDesserts) {
+    let dropPromises = []
+
     for (let i = 0; i < movedDesserts.length; i++) {
       let dessert = movedDesserts[i]
       let { row, col } = dessert
       
       let point = Util.rowColToPoint(row, col, 0.5)
       
-      this.tweens.add({
+      let tween = this.tweens.add({
         targets: dessert,
         y: point.y,
         duration: 300
       })
+
+      dropPromises.push(Util.pifyTween(tween))
     }
+
+    return Promise.all(dropPromises)
   }
 
   _createNewDesserts(cols) {
