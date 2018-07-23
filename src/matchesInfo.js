@@ -1,6 +1,6 @@
 import Util from './util'
 
-export default class MathesInfo {
+export default class MatchesInfo {
   
   matchedSet = new Set()
   

@@ -33,6 +33,17 @@ const CHECK_DIRECTION = {
 // 三消
 const MIN_MATCHES = 3
 
+// Croissant   羊角面包
+// Cupcake     纸托蛋糕
+// Danish      丹麦蓝乳酪
+// Donut       甜甜圈
+// Macaroon    杏仁饼(马卡龙)
+// SugarCookie 糖果曲奇
+// 感觉放到level里更好
+const DESSERT_FRAMES = ['Croissant', 'Cupcake', 'Danish', 'Donut', 'Macaroon', 'SugarCookie']
+
+const EXPLOSION_KEYS = [ 'explosionpink', 'explosionred' ]
+
 // ...
 const Debug = true
 const level = {
@@ -45,19 +56,7 @@ export {
   tileConfig,
   Debug,
   CHECK_DIRECTION,
-  MIN_MATCHES
+  MIN_MATCHES,
+  DESSERT_FRAMES,
+  EXPLOSION_KEYS
 }
-
-/*
-上下交换:
-  (在颜色不同的情况下)
-  上面的需要查看上两格, 左两格，右两格
-  下面的需要查看上两格，左两格，右两格
-  
-左右交换:
-
-
-初始状态:
-  去除掉能消除的格子，去除掉的格子重新随机，再重复此过程, 直到ok
-
- */

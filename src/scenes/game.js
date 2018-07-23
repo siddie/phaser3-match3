@@ -1,7 +1,8 @@
-import { GameObjects, Geom, Scene } from 'phaser'
-import { tilesConfig, tileConfig } from '../configs'
+import { GameObjects, Geom, Scene, Utils } from 'phaser'
+import { tilesConfig, tileConfig, DESSERT_FRAMES, MIN_MATCHES } from '../configs'
 import Dessert from '../sprites/dessert'
 import Explosion from '../sprites/explosion'
+import Explosions from '../explosions'
 import Desserts from '../desserts'
 import Util from '../util'
 import pify from 'ts-pify'
@@ -10,31 +11,30 @@ export default class GameScene extends Scene {
   _width
   _height
   // Phaser.GameObjects.Container对象
-  _dessertContainer
-  
+  _dessertContainer = null
+
   // Desserts实例对象
-  _desserts
+  _desserts = null
 
   // TODO: 换个属性，row col好像没用
   _swipeFromRow = null
   _swipeFromCol = null
   // 选中的甜品对象
-  selectionDessert
+  selectionDessert = null
 
   // 每列新甜品的初始位置Map
   _newDessertPositions = null
 
   constructor() {
     super({ key: 'Game' })
-
-    this._desserts = new Desserts(this)
-    this._newDessertPositions = new Map()
   }
   
   init() {
     let config = this.sys.game.config
     this._width = config.width
     this._height = config.height
+    this._desserts = new Desserts(this)
+    this._newDessertPositions = new Map()
 
     this.bgSound = this.sound.add('bgMusic')
     this.swapSound = this.sound.add('swapSound')
@@ -47,6 +47,7 @@ export default class GameScene extends Scene {
 
     this._setupPositions()
     this._initTiles()
+    this._initDesserts()
 
     // 默认就是ture, 社不设置无所谓
     this.input.topOnly = true
@@ -90,7 +91,7 @@ export default class GameScene extends Scene {
       let isNeighbor = Util.isNeighbor(this.selectionDessert, toDessert)
 
       if (isNeighbor) {
-        this.trySwap(this.selectionDessert, toDessert)
+        this._trySwap(this.selectionDessert, toDessert)
         this.selectionDessert.removeHighLighted()
       }
     }
@@ -105,7 +106,7 @@ export default class GameScene extends Scene {
     this.selectionDessert = null
   }
 
-  trySwap(fromDessert, toDessert) {
+  _trySwap(fromDessert, toDessert) {
     this._swipeFromRow = null
     this._swipeFromCol = null
 
@@ -155,12 +156,8 @@ export default class GameScene extends Scene {
     let { rowsNumber, colsNumber, offsetX, offsetY } = tilesConfig
     
     let tilesContainer = this.add.container(offsetX, offsetY)
-    
     let explosionGroup = this.add.group() 
-    // NOTE: 在一个container中 setDepth似乎无效。 group倒是可以
-    // swap的情况不会有tile遮住dessert的情况
-    let _dessertContainer = this._dessertContainer = this.add.container(offsetX, offsetY)
-
+    
     for (let row = 0; row < rowsNumber; row++) {
       for (let col = 0; col < colsNumber; col++) {
         let point = Util.rowColToPoint(row, col)
@@ -168,16 +165,37 @@ export default class GameScene extends Scene {
         let tile = this.add.image(point.x, point.y, 'desserts', 'Tile')
         tile.setOrigin(0, 0)
 
-        let explosionSprite = new Explosion(this, point.x, point.y, 'explosion')
-        let dessert = new Dessert(this, row, col, point.x, point.y, 'desserts')
+        let explosionSprite = new Explosion(this, row, col, point.x, point.y, 'explosion')
         
         tilesContainer.add(tile)
         explosionGroup.add(explosionSprite, true)
-        _dessertContainer.add(dessert)
       }
     }
 
-    this._desserts.initData(_dessertContainer.getAll(), explosionGroup.getChildren())
+    Explosions.initData(explosionGroup.getChildren())
+  }
+
+  _initDesserts() {
+    let { rowsNumber, colsNumber, offsetX, offsetY } = tilesConfig
+
+    let _desserts = this._desserts
+    // NOTE: 在一个container中 setDepth似乎无效。 group倒是可以
+    // swap的情况不会有tile遮住dessert的情况
+    let _dessertContainer = this._dessertContainer = this.add.container(offsetX, offsetY)
+
+    for (let row = 0; row < rowsNumber; row++) {
+      for (let col = 0; col < colsNumber; col++) {
+        let point = Util.rowColToPoint(row, col)
+        let frame = Utils.Array.GetRandom(DESSERT_FRAMES)
+        
+        while (row >= MIN_MATCHES - 1 && _desserts.getRowMatches(row, col, -1, 0, frame) || col >= MIN_MATCHES - 1 && _desserts.getColMatches(row, col, -1, 0, frame)) {
+          frame = Utils.Array.GetRandom(DESSERT_FRAMES)
+        }
+
+        let dessert = new Dessert(this, row, col, point.x, point.y, 'desserts', frame)
+        _dessertContainer.add(dessert)
+      }
+    }
   }
 
   /**
@@ -226,7 +244,6 @@ export default class GameScene extends Scene {
    * @param {Dessert[]} movedDesserts 
    */
   _dropAnim(movedDesserts) {
-    console.log(movedDesserts)
     for (let i = 0; i < movedDesserts.length; i++) {
       let dessert = movedDesserts[i]
       let { row, col } = dessert
@@ -253,8 +270,6 @@ export default class GameScene extends Scene {
         let point = _newDessertPositions.get(col)
         
         let newDessert = new Dessert(this, row, col, point.x, point.y, 'desserts')
-        _desserts.setDessert(row, col, newDessert)
-
         this._dessertContainer.add(newDessert)
         newDessertsInfo.push(newDessert)
       }

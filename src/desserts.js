@@ -1,6 +1,7 @@
 import { tilesConfig, CHECK_DIRECTION, MIN_MATCHES } from './configs'
 import Util from './util'
-import MathesInfo from './matchesInfo'
+import Explosion from './explosions'
+import MatchesInfo from './matchesInfo'
 
 export default class Desserts {
   scene = null
@@ -8,9 +9,6 @@ export default class Desserts {
   // 二维数组
   _dessertsArr = null
   
-  // 二维数组
-  _explosionsArr = null
-
   // 甜品的xy位置map
   // 感觉程序很擅长做row, col -> x, y的计算，这里就不存储了
   // _dessertsPosMap = null
@@ -19,38 +17,42 @@ export default class Desserts {
     this.scene = scene
 
     this._dessertsArr = []
-    this._explosionsArr = []
     // this._dessertsPosMap = new Map()
+
+    this.scene.events.on('createDessert', this._setDessert, this)
   }
 
   /**
    * 初始化数据
    * @param allDesserts 所有甜品对象 一维数组
-   * @param allExplosions 所有消除精灵 一维数组
    */
-  initData(allDesserts, allExplosions) {
+  initData(allDesserts) {
     let _dessertsArr = this._dessertsArr
-    let _explosionsArr = this._explosionsArr
-    // let _dessertsPosMap = this._dessertsPosMap
-
+    
     for (let i = 0; i < allDesserts.length; i++) {
       let dessert = allDesserts[i]
-      let explosion = allExplosions[i]
       let { row, col, x, y } = dessert
 
       if (!_dessertsArr[row]) {
         _dessertsArr[row] = []
-        _explosionsArr[row] = []
       }
 
       _dessertsArr[row][col] = dessert
-      _explosionsArr[row][col] = explosion
-      // _dessertsPosMap.set(`${row}${col}`, { x, y })
     }
   }
   
-  setDessert(row, col, dessert) {
-    this._dessertsArr[row][col] = dessert
+  _setDessert(dessert, row, col) {
+    let _dessertsArr = this._dessertsArr
+
+    if (!_dessertsArr[row]) {
+      _dessertsArr[row] = []
+    }
+
+    _dessertsArr[row][col] = dessert
+  }
+
+  getDessert(row, col) {
+    return this._dessertsArr[row][col]
   }
 
   /**
@@ -172,7 +174,7 @@ export default class Desserts {
     let _dessertsArr = this._dessertsArr
     let { row, col } = dessert
     let { rowsNumber, colsNumber } = tilesConfig
-    let matchesList = [ dessert ]
+    let matchesList = []
     
     // 所以这里row, col必须为数字，不能是字符串
     let checkRows = row
@@ -181,22 +183,117 @@ export default class Desserts {
     // let max = checkDeltaRow == 0 ? rowsNumber : rowsNumber
     
     for (let i = 1; i < MIN_MATCHES; i++) {
+      let over = true
       checkRows += checkDeltaRow
       checkCols += checkDeltaCol
 
       if (checkRows >= 0 && checkRows < rowsNumber && checkCols >= 0 && checkCols < colsNumber) {
         let checkDessert = _dessertsArr[checkRows][checkCols]
         if (dessert.isSameDessert(checkDessert)) {
+          over = false
           matchesList.push(checkDessert)
-        } else {
-          break
         }
       }
+
+      if (over) {
+        break
+      }
+    }
+
+    if (matchesList.length) {
+      matchesList.push(dessert)
     }
 
     return matchesList
   }
 
+  // 左边是否符合消除
+  // 上边是否符合消除
+  /**
+   * 
+   * @param {number} row 
+   * @param {number} col
+   * @param {-1 | 0 | 1} startDeltaRow
+   * @param {-1 | 0 | 1} endDeltaRow 
+   */
+  getRowMatches(row, col, startDeltaRow, endDeltaRow, frame) {
+    let { rowsNumber } = tilesConfig
+    let _dessertsArr = this._dessertsArr
+    let startRow = row + (MIN_MATCHES - 1) * startDeltaRow
+    let endRow = row + (MIN_MATCHES - 1) * endDeltaRow
+    
+    // self
+    let matchesList = []
+
+    if (startRow < 0) startRow = 0
+    if (endRow >= rowsNumber) endRow = rowsNumber - 1
+
+    for (let r = row - 1; r >= startRow; r--) {
+      let checkDessert = _dessertsArr[r][col]
+
+      if (checkDessert.frameKey !== frame) {
+        break
+      }
+
+      matchesList.push(checkDessert)
+    }
+
+    for (let r = row + 1; r <= endRow; r++) {
+      let checkDessert = _dessertsArr[r][col]
+
+      if (checkDessert.frameKey !== frame) {
+        break
+      }
+
+      matchesList.push(checkDessert)
+    }
+    
+    if (matchesList.length < MIN_MATCHES - 1) {
+      return
+    }
+
+    return matchesList
+  }
+
+  getColMatches(row, col, startDeltaCol, endDeltaCol, frame) {
+    let { colsNumber } = tilesConfig
+    let _dessertsArr = this._dessertsArr
+    let startCol = col + (MIN_MATCHES - 1) * startDeltaCol
+    let endCol = col + (MIN_MATCHES - 1) * endDeltaCol
+    
+    // self
+    let matchesList = []
+
+    if (startCol < 0) startCol = 0
+    if (endCol >= colsNumber) endCol = colsNumber - 1
+
+    for (let c = col - 1; c >= startCol; c--) {
+      let checkDessert = _dessertsArr[row][c]
+
+      if (checkDessert.frameKey !== frame) {
+        break
+      }
+
+      matchesList.push(checkDessert)
+    }
+
+    for (let c = col + 1; c <= endCol; c++) {
+      let checkDessert = _dessertsArr[row][c]
+
+      if (checkDessert.frameKey !== frame) {
+        break
+      }
+
+      matchesList.push(checkDessert)
+    }
+    
+    if (matchesList.length < MIN_MATCHES - 1) {
+      return
+    }
+
+    return matchesList
+  }
+  
   /*
    * 将甜品从二维数组中的删除
    * 并做消除动画, 完成后回调
@@ -204,7 +301,7 @@ export default class Desserts {
   remove(dessert, callback) {
     let { row, col } = dessert
     this._dessertsArr[row][col] = null
-    this._explosionsArr[row][col].playAnim(callback)
+    Explosion.explosionsArr[row][col].playAnim(callback)
   }
 
   // 
