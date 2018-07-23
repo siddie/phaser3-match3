@@ -25,7 +25,7 @@ const CHECK_DIRECTION = {
   RIGHT: 2,
   DOWN: 4,
   LEFT: 8,
-  HORIZONAL: 10,
+  HORIZONTAL: 10,
   VERTICAL: 5,
   ALL: 15
 }

@@ -104,30 +104,30 @@ export default class Desserts {
   }
 
   getMatches(dessert, direct) {
-    let horizonalMatches = this._getMatchHorizonally(dessert, direct)
+    let horizontalMatches = this._getMatchHorizontally(dessert, direct)
     let verticalMatches = this._getMatchVertically(dessert, direct)
     
-    let matches = Util.unionSet(horizonalMatches, verticalMatches)
+    let matches = Util.unionSet(horizontalMatches, verticalMatches)
 
     return matches
   }
 
-  _getMatchHorizonally(dessert, direct) {
+  _getMatchHorizontally(dessert, direct) {
     let matchesSet = new Set()
     let { row, col, frameKey } = dessert
     let isBitSet = Util.isBitSet
 
-    let horizonalMatches
+    let horizontalMatches
 
-    if (isBitSet(direct, CHECK_DIRECTION.HORIZONAL)) {
-      horizonalMatches = this.getHorizonalMatches(row, col, -1, 1, frameKey)
+    if (isBitSet(direct, CHECK_DIRECTION.HORIZONTAL)) {
+      horizontalMatches = this.getHorizontalMatches(row, col, -1, 1, frameKey)
     } else if (isBitSet(direct, CHECK_DIRECTION.RIGHT)) {
-      horizonalMatches = this.getHorizonalMatches(row, col, 0, 1, frameKey)
+      horizontalMatches = this.getHorizontalMatches(row, col, 0, 1, frameKey)
     } else if (isBitSet(direct, CHECK_DIRECTION.LEFT)) {
-      horizonalMatches = this.getHorizonalMatches(row, col, -1, 0, frameKey)
+      horizontalMatches = this.getHorizontalMatches(row, col, -1, 0, frameKey)
     }
 
-    Util.addArrToSet(matchesSet, horizonalMatches)
+    Util.addArrToSet(matchesSet, horizontalMatches)
 
     if (matchesSet.size < MIN_MATCHES - 1) {
       matchesSet.clear()
@@ -172,7 +172,7 @@ export default class Desserts {
    * @param {0 | 1} endDeltaCol    待检查的相对列终点  0 (MIN_MATCHES - 1)
    * @return {Dessert[] | undefined}
    */
-  getHorizonalMatches(row, col, startDeltaCol, endDeltaCol, frame) {
+  getHorizontalMatches(row, col, startDeltaCol, endDeltaCol, frame) {
     let { colsNumber } = tilesConfig
     let _dessertsArr = this._dessertsArr
     let startCol = col + (MIN_MATCHES - 1) * startDeltaCol
@@ -256,6 +256,25 @@ export default class Desserts {
     return matchesList
   }
   
+  // TODO: check too much, can opotimize
+  // 节约时间，这里不用MIN_MATCHES了，直接用"三"消计算
+  checkPotentialMatches() {
+    let _dessertArr = this._dessertsArr
+    let { rowsNumber, colsNumber } = tilesConfig
+    let potentialMatches = []
+
+    for (let row = 0; row < rowsNumber; row++) {
+      for (let col = 0; col < colsNumber; col++) {
+        let dessert = _dessertArr[row][col]
+        let matches
+        // 横向6种情况
+        // 纵向6种情况
+      }
+    }
+
+    return null
+  }
+  
   /*
    * 将甜品从二维数组中的删除
    * 并做消除动画, 完成后回调
@@ -266,7 +285,10 @@ export default class Desserts {
     Explosion.explosionsArr[row][col].playAnim(callback)
   }
 
-  // 
+  /**
+   * 数据上，将下层的null值由上层"坠落"填充
+   * @param {*} cols 
+   */
   collapse(cols) {
     let { rowsNumber } = tilesConfig
     let _dessertArr = this._dessertsArr

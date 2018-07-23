@@ -155,4 +155,44 @@ export default class Util {
     }
     return false
   }
+
+  
+  /* example *\
+    * * * * * *
+    * & * * & *
+    & * & & * & 
+    * & * * & *
+    * * * * * *
+  \* example */
+  static checkHorizontal1(row, col, dessertsArr) {
+
+  }
+
+  static checkHorizontal2(row, col, dessertsArr) {
+
+  }
+
+  static checkHorizontal3(row, col, dessertsArr) {
+
+  }
+
+  /* example *\
+   * * & * * *
+   * & * & * *
+   * * & * * *
+   * * & * * * 
+   * & * & * *
+   * * & * * *
+  \* example */ 
+  static checkVertical1() {
+
+  }
+
+  static checkVertical2() {
+    
+  }
+
+  static checkVertical3() {
+    
+  }
 }
