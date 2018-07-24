@@ -119,7 +119,20 @@ export default class GameScene extends Scene {
   
   // 
   _checkPotentialMatches() {
-    let potentialMatches = this._desserts.checkPotentialMatches()
+    setTimeout(() => {
+      let potentialMatches = this._desserts.checkPotentialMatches()
+      if (potentialMatches) {
+        potentialMatches.forEach((dessert) => {
+          this.tweens.add({
+            targets: dessert,
+            alpha: 0.3,
+            yoyo: true,
+            repeat: 3,
+            duration: 800
+          })
+        })
+      }
+    }, 1000)
   }
 
   _onPointerDown(pointer, currentlyOver) {

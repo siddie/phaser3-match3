@@ -156,43 +156,263 @@ export default class Util {
     return false
   }
 
-  
-  /* example *\
-    * * * * * *
-    * & * * & *
-    & * & & * & 
-    * & * * & *
-    * * * * * *
-  \* example */
   static checkHorizontal1(row, col, dessertsArr) {
+    const { rowsNumber, colsNumber } = tilesConfig
 
+    if (col <= colsNumber - 2) {
+      if (dessertsArr[row][col].isSameDessert(dessertsArr[row][col + 1])) {
+        /*  example  *\
+         * *  *  * * *
+         * *  *  * * *
+         * * .&. & * * 
+         * &  *  * * *
+         * *  *  * * *
+        \*  example  */
+        if (row <= rowsNumber - 2 && col >= 1) {
+          if (dessertsArr[row][col].isSameDessert(dessertsArr[row + 1][col - 1])) {
+            return [
+              dessertsArr[row][col],
+              dessertsArr[row][col + 1],
+              dessertsArr[row + 1][col - 1]
+            ]
+          }
+        }
+
+        /*  example  *\
+         * *  *  * * *
+         * &  *  * * *
+         * * .&. & * * 
+         * *  *  * * *
+         * *  *  * * *
+        \*  example  */
+        if (row >= 1 && col >= 1) {
+          if (dessertsArr[row][col].isSameDessert(dessertsArr[row - 1][col - 1])) {
+            return [
+              dessertsArr[row][col],
+              dessertsArr[row][col + 1],
+              dessertsArr[row - 1][col - 1]
+            ]
+          }
+        }
+      }
+    }
+
+    return null
   }
 
   static checkHorizontal2(row, col, dessertsArr) {
+    const { rowsNumber, colsNumber } = tilesConfig
 
+    if (col <= colsNumber - 3) {
+      if (dessertsArr[row][col].isSameDessert(dessertsArr[row][col + 1])) {
+        /*  example  *\
+         * *  *  * * *
+         * *  *  * * *
+         * * .&. & * * 
+         * *  *  * & *
+         * *  *  * * *
+        \*  example  */
+        if (row <= rowsNumber - 2 && col <= colsNumber - 3) {
+          if (dessertsArr[row][col].isSameDessert(dessertsArr[row + 1][col + 2])) {
+            return [
+              dessertsArr[row][col],
+              dessertsArr[row][col + 1],
+              dessertsArr[row + 1][col + 2]
+            ]
+          }
+        }
+
+        /*  example  *\
+         * *  *  * * *
+         * *  *  * & *
+         * * .&. & * * 
+         * *  *  * * *
+         * *  *  * * *
+        \*  example  */
+        if (row >= 1 && col <= colsNumber - 3) {
+          if (dessertsArr[row][col].isSameDessert(dessertsArr[row - 1][col + 2])) {
+            return [
+              dessertsArr[row][col],
+              dessertsArr[row][col + 1],
+              dessertsArr[row - 1][col + 2]
+            ]
+          }
+        }
+      }
+    }
+
+    return null
   }
 
   static checkHorizontal3(row, col, dessertsArr) {
+    const { rowsNumber, colsNumber } = tilesConfig
+   /*  example  *\
+    * *  *  * * *
+    * *  *  * * *
+    * * .&. & * & 
+    * *  *  * * *
+    * *  *  * * *
+   \*  example  */
+    if (col <= colsNumber - 4) {
+      if (dessertsArr[row][col].isSameDessert(dessertsArr[row][col + 1]) && dessertsArr[row][col].isSameDessert(dessertsArr[row][col + 3])) {
+        return [
+          dessertsArr[row][col],
+          dessertsArr[row][col + 1],
+          dessertsArr[row][col + 3]
+        ]
+      }
+    }
+   /*  example  *\
+    * *  *  * * *
+    * *  *  * * *
+    & * .&. & * *
+    * *  *  * * *
+    * *  *  * * *
+   \*  example  */
+    if (col >= 2 && col <= colsNumber - 2) {
+      if (dessertsArr[row][col].isSameDessert(dessertsArr[row][col + 1]) && dessertsArr[row][col].isSameDessert(dessertsArr[row][col - 2])) {
+        return [
+          dessertsArr[row][col],
+          dessertsArr[row][col + 1],
+          dessertsArr[row][col - 2]
+        ]
+      }
+    }
 
+    return null
   }
 
-  /* example *\
-   * * & * * *
-   * & * & * *
-   * * & * * *
-   * * & * * * 
-   * & * & * *
-   * * & * * *
-  \* example */ 
-  static checkVertical1() {
 
+  static checkVertical1(row, col, dessertsArr) {
+    const { rowsNumber, colsNumber } = tilesConfig
+
+    if (row >= 1) {
+      if (dessertsArr[row][col].isSameDessert(dessertsArr[row - 1][col])) {
+        /* example *\
+        * *  *  * * *
+        * *  *  * * *
+        * *  &  * * *
+        * * .&. * * *
+        * &  *  * * *
+        * *  *  * * *
+        \* example */
+        if (row <= row - 2 && col >= 1) {
+          if (dessertsArr[row][col].isSameDessert(dessertsArr[row + 1][col - 1])) {
+            return [
+              dessertsArr[row][col],
+              dessertsArr[row - 1][col],
+              dessertsArr[row + 1][col - 1]
+            ]
+          }
+        }
+        /* example *\
+        * *  *  * * *
+        * *  *  * * *
+        * *  &  * * *
+        * * .&. * * *
+        * *  *  & * *
+        * *  *  * * *
+        \* example */
+        if (row <= row - 2 && col <= colsNumber - 2) {
+          if (dessertsArr[row][col].isSameDessert(dessertsArr[row + 1][col + 1])) {
+            return [
+              dessertsArr[row][col],
+              dessertsArr[row - 1][col],
+              dessertsArr[row + 1][col + 1]
+            ]
+          }
+        }
+      }
+    }
+
+    return null
   }
 
-  static checkVertical2() {
-    
+  static checkVertical2(row, col, dessertsArr) {
+    const { rowsNumber, colsNumber } = tilesConfig
+
+    if (row >= 2) {
+      if (dessertsArr[row][col].isSameDessert(dessertsArr[row - 1][col])) {
+        /* example *\
+        * *  *  * * *
+        * &  *  * * *
+        * *  &  * * *
+        * * .&. * * *
+        * *  *  * * *
+        * *  *  * * *
+        \* example */
+        if (col >= 1) {
+          if (dessertsArr[row][col].isSameDessert(dessertsArr[row - 2][col - 1])) {
+            return [
+              dessertsArr[row][col],
+              dessertsArr[row - 1][col],
+              dessertsArr[row - 2][col - 1]
+            ]
+          }
+        }
+
+        /* example *\
+        * *  *  * * *
+        * *  *  & * *
+        * *  &  * * *
+        * * .&. * * *
+        * *  *  * * *
+        * *  *  * * *
+        \* example */
+        if (col <= colsNumber - 2) {
+          if (dessertsArr[row][col].isSameDessert(dessertsArr[row - 2][col + 1])) {
+            return [
+              dessertsArr[row][col],
+              dessertsArr[row - 1][col],
+              dessertsArr[row - 2][col + 1]
+            ]
+          }
+        }
+      }
+    }
+
+    return null
   }
 
-  static checkVertical3() {
-    
+  static checkVertical3(row, col, dessertsArr) {
+    const { rowsNumber, colsNumber } = tilesConfig
+
+    if (row >= 3) {
+      /* example *\
+       * *  &  * * *
+       * *  *  * * *
+       * *  &  * * *
+       * * .&. * * *
+       * *  *  * * *
+       * *  *  * * *
+      \* example */  
+      if (dessertsArr[row][col].isSameDessert(dessertsArr[row - 1][col]) && dessertsArr[row][col].isSameDessert(dessertsArr[row - 3][col])) {
+        return [
+          dessertsArr[row][col],
+          dessertsArr[row - 1][col],
+          dessertsArr[row - 3][col]
+        ]
+      }
+    }
+
+    if (row >= 1 && row <= rowsNumber - 3) {
+      /* example *\
+       * *  *  * * *
+       * *  *  * * *
+       * *  &  * * *
+       * * .&. * * *
+       * *  *  * * *
+       * *  &  * * *
+      \* example */ 
+      if (dessertsArr[row][col].isSameDessert(dessertsArr[row - 1][col]) && dessertsArr[row][col].isSameDessert(dessertsArr[row + 2][col])) {
+        return [
+          dessertsArr[row][col],
+          dessertsArr[row - 1][col],
+          dessertsArr[row + 2][col]
+        ]
+      }
+    }
+
+    return null
   }
 }

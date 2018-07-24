@@ -1,3 +1,4 @@
+import { Utils } from 'phaser'
 import { tilesConfig, CHECK_DIRECTION, MIN_MATCHES } from './configs'
 import Util from './util'
 import Explosion from './explosions'
@@ -256,8 +257,9 @@ export default class Desserts {
     return matchesList
   }
   
-  // TODO: check too much, can opotimize
-  // 节约时间，这里不用MIN_MATCHES了，直接用"三"消计算
+  // NOTE: 节约时间，空间，这里不用MIN_MATCHES了，直接用"三"消计算
+  // 如果写通用的话就在循环中判断需要检查的row, col是否出界
+  // 或者做一次横向swap再undoswap, 再做一次纵向swap再undoswap(我觉得不好)
   checkPotentialMatches() {
     let _dessertArr = this._dessertsArr
     let { rowsNumber, colsNumber } = tilesConfig
@@ -265,10 +267,51 @@ export default class Desserts {
 
     for (let row = 0; row < rowsNumber; row++) {
       for (let col = 0; col < colsNumber; col++) {
-        let dessert = _dessertArr[row][col]
-        let matches
+        let matchThree
         // 横向6种情况
+        /*  example  *\
+         * *  *  * * *
+         * &  *  * & *
+         & * .&. & * & 
+         * &  *  * & *
+         * *  *  * * *
+        \*  example  */
+        matchThree = Util.checkHorizontal1(row, col, _dessertArr)
+        if (matchThree !== null) potentialMatches.push(matchThree)
+
+        matchThree = Util.checkHorizontal2(row, col, _dessertArr)
+        if (matchThree !== null) potentialMatches.push(matchThree)
+
+        matchThree = Util.checkHorizontal2(row, col, _dessertArr)
+        if (matchThree !== null) potentialMatches.push(matchThree)
+
         // 纵向6种情况
+        /* example *\
+         * * & * * *
+         * & * & * *
+         * * & * * *
+         * * & * * * 
+         * & * & * *
+         * * & * * *
+        \* example */
+        matchThree = Util.checkVertical1(row, col, _dessertArr)
+        if (matchThree !== null) potentialMatches.push(matchThree)
+
+        matchThree = Util.checkVertical1(row, col, _dessertArr)
+        if (matchThree !== null) potentialMatches.push(matchThree)
+
+        matchThree = Util.checkVertical1(row, col, _dessertArr)
+        if (matchThree !== null) potentialMatches.push(matchThree)
+
+        // 这里3是随便取的
+        if (potentialMatches.length >= 3) {
+          return Utils.Array.GetRandom(potentialMatches)
+        }
+
+        // 相当于是优化，仅仅为了显示一个匹配，不用做无谓的比较了
+        if (row >= rowsNumber / 2 && potentialMatches.length > 0) {
+          return Utils.Array.GetRandom(potentialMatches)
+        }
       }
     }
 

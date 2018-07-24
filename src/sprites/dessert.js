@@ -41,13 +41,4 @@ export default class Dessert extends GameObjects.Sprite {
     // this.frame.name.replace('-Highlighted', '')
     this.setFrame(this.frameKey)
   }
-
-  // this.tweens.add({
-  //   targets: testDessert,
-  //   alpha: 0.3,
-  //   yoyo: true,
-  //   repeat: 3,
-  //   // ease: 'Power1',
-  //   duration: 800
-  // })
 }
