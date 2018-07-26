@@ -66,11 +66,11 @@ export default class Util {
   static calcCheckDirects(deltaRow, deltaCol) {
     let fromCheckDirect = CHECK_DIRECTION.NONE
     let toCheckDirect = CHECK_DIRECTION.NONE
-
+    
     // 上下交换
     if (deltaCol == 0) {
-      fromCheckDirect |= CHECK_DIRECTION.HORIZONAL
-      toCheckDirect |= CHECK_DIRECTION.HORIZONAL
+      fromCheckDirect |= CHECK_DIRECTION.HORIZONTAL
+      toCheckDirect |= CHECK_DIRECTION.HORIZONTAL
 
       if (deltaRow == 1) {
         fromCheckDirect |= CHECK_DIRECTION.DOWN

@@ -119,7 +119,7 @@ export default class Desserts {
     let isBitSet = Util.isBitSet
 
     let horizontalMatches
-
+    
     if (isBitSet(direct, CHECK_DIRECTION.HORIZONTAL)) {
       horizontalMatches = this.getHorizontalMatches(row, col, -1, 1, frameKey)
     } else if (isBitSet(direct, CHECK_DIRECTION.RIGHT)) {
