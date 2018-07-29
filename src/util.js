@@ -3,7 +3,7 @@ import { tilesConfig, tileConfig, CHECK_DIRECTION } from './configs'
 
 export default class Util {
   /**
-   * 二维数组坐标转Point对象(TODO: 目前仅用到x, y)
+   * 二维数组坐标转Point对象
    * @param {number} row
    * @param {number} col
    */
