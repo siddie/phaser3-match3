@@ -332,38 +332,75 @@ export default class Desserts {
    * 数据上，将下层的null值由上层"坠落"填充
    * @param {*} cols 
    */
-  collapse(cols) {
+  quickCollapse(cols) {
     let { rowsNumber } = tilesConfig
     let _dessertArr = this._dessertsArr
 
     let collapseInfo = []
     
+    // TODO: 怎么感觉这么像排序? 快速排序试试?
+    // for (let col in cols) {
+    //   col = Number(col)
+    //   for (let row = rowsNumber - 1; row >= 0; row--) {
+    //     // 当找到一个null元素
+    //     if (_dessertArr[row][col] == null) {
+    //       // 向上, 找第一个非null
+    //       for (let row2 = row - 1; row2 >= 0; row2--) {
+    //         if (_dessertArr[row2][col] !== null) {
+    //           // 
+    //           _dessertArr[row][col] = _dessertArr[row2][col]
+    //           _dessertArr[row2][col] = null
+    //           _dessertArr[row][col].row = row
+    //           _dessertArr[row][col].col = col
+    //           collapseInfo.push(_dessertArr[row][col])
+    //           break
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+    
     for (let col in cols) {
-      col = Number(col)
-      // TODO: 怎么感觉这么像排序? 快速排序试试?
-      for (let row = rowsNumber - 1; row >= 0; row--) {
-        // 当找到一个null元素
-        if (_dessertArr[row][col] == null) {
-          // 向上, 找第一个非null
-          for (let row2 = row - 1; row2 >= 0; row2--) {
-            if (_dessertArr[row2][col] !== null) {
-              // 
-              _dessertArr[row][col] = _dessertArr[row2][col]
-              _dessertArr[row2][col] = null
+      let tmp = []
+      for (let row = 0; row < rowsNumber - 1; row++) {
+        tmp.push(_dessertArr[row][col])
+      }
+      this._quickPartition(tmp, _dessertArr, col, collapseInfo)
+    }
+    
+    return collapseInfo
+  }
 
-              _dessertArr[row][col].row = row
-              _dessertArr[row][col].col = col
+  // x o x o x x o o o
+  // |     |   |     |
+  // p     u   q     r
+  
+  // 实际上p...r也代表了行索引
+  _quickPartition(arr, dessertArr, col, collapseInfo) {
+    let r = arr.length - 1
+    let q = r
 
-              collapseInfo.push(_dessertArr[row][col])
+    for (let u = r - 1; u >= 0; u--) {
+      if (arr[u] != null && arr[q] == null) {
+        dessertArr[q][col] = dessertArr[u][col]
+        // 仅行发生变化
+        dessertArr[q][col].row = q
+        
+        dessertArr[u][col] = null
+        collapseInfo.push(dessertArr[q][col])
 
-              break
-            }
-          }
-        }
+        // arr这边也稍微要处理一下, row就不处理了
+        arr[q] = arr[u]
+        arr[u] = null
+        
+        q--
+      }
+
+      if (arr[u] == null && arr[q] != null) {
+        q = u
       }
     }
 
-    return collapseInfo
   }
 
   /**

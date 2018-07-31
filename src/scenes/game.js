@@ -209,7 +209,7 @@ export default class GameScene extends Scene {
     let _desserts = this._desserts
 
     // collapse
-    let collapseArr = _desserts.collapse(removedCols)
+    let collapseArr = _desserts.quickCollapse(removedCols)
     
     // create new dessert
     let newDessertsArr = this._createNewDesserts(removedCols)
