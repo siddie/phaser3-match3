@@ -6,6 +6,6 @@ export default class BootScene extends Scene {
   }
   
   create() {
-    this.scene.start('Preload', { drp: window.devicePixelRatio })
+    this.scene.start('Preload')
   }
 }

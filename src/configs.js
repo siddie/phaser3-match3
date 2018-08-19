@@ -1,3 +1,4 @@
+const DPR = window.devicePixelRatio
 
 const gameConfig = {
   width: 640,
@@ -51,6 +52,7 @@ const level = {
 }
 
 export {
+  DPR,
   gameConfig,
   tilesConfig,
   tileConfig,

@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import BootScene from './scenes/boot'
 import PreloadScene from './scenes/preload'
 import GameScene from './scenes/game'
-import { gameConfig } from './configs'
+import { DPR, gameConfig } from './configs'
 
 let config = {
   type: Phaser.AUTO,
@@ -11,6 +11,7 @@ let config = {
   height: gameConfig.height,
   scene: [ BootScene, PreloadScene, GameScene ],
   backgroundColor: 0x000000,
+  zoom: 1 / DPR,
   // transparent: true,
   // banner: false
 }

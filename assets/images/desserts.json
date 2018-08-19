@@ -1,0 +1,292 @@
+{
+	"textures": [
+		{
+			"image": "desserts.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 416,
+				"h": 36
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Croissant-Highlighted",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "Croissant",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 32,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "Cupcake-Highlighted",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 64,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "Cupcake",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 96,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "Danish-Highlighted",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 128,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "Danish",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 160,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "Donut-Highlighted",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 192,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "Donut",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 224,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "Macaroon-Highlighted",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 256,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "Macaroon",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 288,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "SugarCookie-Highlighted",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 320,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "SugarCookie",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 352,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				},
+				{
+					"filename": "Tile",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 36
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					},
+					"frame": {
+						"x": 384,
+						"y": 0,
+						"w": 32,
+						"h": 36
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:a9db4ec112d4285ad4b5a0940a529c96:36c18de6d8d567b07158bf7c76bfe5f7:e7a4c316296f2f5789cc67267f130ce1$"
+	}
+}
