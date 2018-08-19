@@ -12,7 +12,7 @@ let config = {
   scene: [ BootScene, PreloadScene, GameScene ],
   backgroundColor: 0x000000,
   // transparent: true,
-  banner: false
+  // banner: false
 }
 
 new Phaser.Game(config)
