@@ -362,7 +362,7 @@ export default class Desserts {
     
     for (let col in cols) {
       let tmp = []
-      for (let row = 0; row < rowsNumber - 1; row++) {
+      for (let row = 0; row < rowsNumber; row++) {
         tmp.push(_dessertArr[row][col])
       }
       this._quickPartition(tmp, _dessertArr, col, collapseInfo)
@@ -374,12 +374,12 @@ export default class Desserts {
   // x o x o x x o o o
   // |     |   |     |
   // p     u   q     r
-  
+  // x表示为null
   // 实际上p...r也代表了行索引
   _quickPartition(arr, dessertArr, col, collapseInfo) {
     let r = arr.length - 1
     let q = r
-
+    
     for (let u = r - 1; u >= 0; u--) {
       if (arr[u] != null && arr[q] == null) {
         dessertArr[q][col] = dessertArr[u][col]
@@ -389,7 +389,7 @@ export default class Desserts {
         dessertArr[u][col] = null
         collapseInfo.push(dessertArr[q][col])
 
-        // arr这边也稍微要处理一下, row就不处理了
+        // arr这边也稍微要处理一下
         arr[q] = arr[u]
         arr[u] = null
         
