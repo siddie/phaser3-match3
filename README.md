@@ -1,4 +1,4 @@
-## Classic Match3 Game
+## Phaser3-Match3 Game
 
 - [ ] optimize code
 - [ ] add levels
