@@ -1,7 +1,11 @@
-经典三消小游戏
+## Classic Match3 Game
 
-- [ ] 优化
-- [ ] level
-- [ ] bonus
+- [ ] optimize code
+- [ ] add levels
+- [ ] bonus...
 - [ ] sound
 - [ ] socket.io
+
+## Related
+https://github.com/anjmao/phaser-candy-crush
+https://github.com/boeledi/flutter_crush
