@@ -20,7 +20,7 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "phaser": "^3.16.0-rc1",
+    "phaser": "^3.16.0-rc2",
     "ts-pify": "^0.1.2"
   }
 }
