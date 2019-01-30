@@ -13,7 +13,7 @@ export default class PreloadScene extends Scene {
     // 设置加载图片基础路径
     this.load.setPath('./assets/images')
     // 背景
-    this.load.image('background', `Background${_drpSurfix}.png`)
+    this.load.image('background', `background${_drpSurfix}.png`)
     // 加载甜品
     this.load.multiatlas({
       key: 'desserts',
