@@ -31,6 +31,7 @@ export default class GameScene extends Scene {
   
   init() {
     let config = this.sys.game.config
+    
     this._width = config.width
     this._height = config.height
     this._desserts = new Desserts(this)
@@ -44,7 +45,7 @@ export default class GameScene extends Scene {
 
   create() {
     this.add.image(this._width / 2, this._height / 2, 'background')
-
+    
     this._setupPositions()
     this._initTiles()
     this._initDesserts()
@@ -233,7 +234,7 @@ export default class GameScene extends Scene {
 
   /**
    * 
-   * @param {(Set | Array | undefined)[]} setArr
+   * @param {(Set | Array | undefined)[]} matchesList
    */
   _unionAndRemove(matchesList) {
     // NOTE: 空的Set这里也直接 union了

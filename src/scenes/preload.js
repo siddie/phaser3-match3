@@ -1,4 +1,3 @@
-import { DPR } from '../configs'
 import { Scene } from 'phaser'
 
 export default class PreloadScene extends Scene {
@@ -6,12 +5,6 @@ export default class PreloadScene extends Scene {
 
   constructor() {
     super({ key: 'Preload' })
-
-    if (DPR == 2) {
-      this._drpSurfix = '@2x'
-    } else if (DPR >= 3) {
-      this._drpSurfix = '@3x'
-    }
   }
 
   preload() {
