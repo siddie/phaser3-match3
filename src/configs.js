@@ -9,7 +9,7 @@ const tilesConfig = {
   rowsNumber: 8,
   colsNumber: 8,
   offsetX: 0,
-  offsetY: 100
+  offsetY: 160
 }
 
 const tileConfig = {
@@ -46,17 +46,14 @@ const DESSERT_FRAMES = ['Croissant', 'Cupcake', 'Danish', 'Donut', 'Macaroon', '
 const EXPLOSION_KEYS = ['explosionpink', 'explosionred']
 
 // ...
-const Debug = true
-const level = {
-  
-}
+// const Debug = true
 
 export {
   // DPR,
   gameConfig,
   tilesConfig,
   tileConfig,
-  Debug,
+  // Debug,
   CHECK_DIRECTION,
   MIN_MATCHES,
   DESSERT_FRAMES,

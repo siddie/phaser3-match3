@@ -52,13 +52,13 @@ export default class GameScene extends Scene {
 
     this._checkPotentialMatches()
     
-    // 默认就是ture, 社不设置无所谓
+    // it is not neccesary to set, because the default value of input.topOnly is true
     this.input.topOnly = true
     this.input.on('pointerdown', this._onPointerDown, this)
     this.input.on('pointermove', this._onPointerMove, this)
     this.input.on('pointerup', this._onPointerUp, this)
 
-    // this.bgSound.play()
+    this.bgSound.play()
   }
 
   _setupPositions() {
@@ -71,7 +71,10 @@ export default class GameScene extends Scene {
     }
   }
 
-  // 初始化甜品瓦片
+  /**
+   * init dessert tiles and explosionGroup
+   * 
+   */
   _initTiles() {
     let { rowsNumber, colsNumber, offsetX, offsetY } = tilesConfig
     
@@ -95,6 +98,10 @@ export default class GameScene extends Scene {
     Explosions.initData(explosionGroup.getChildren())
   }
   
+  /**
+   * init dessert object
+   * 
+   */
   _initDesserts() {
     let { rowsNumber, colsNumber, offsetX, offsetY } = tilesConfig
 
@@ -127,8 +134,8 @@ export default class GameScene extends Scene {
           targets: potentialMatches,
           alpha: 0.3,
           yoyo: true,
-          repeat: 3,
-          duration: 800
+          repeat: 2,
+          duration: 600
         })
       }
     }, 1000)
