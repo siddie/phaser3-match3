@@ -28,12 +28,12 @@ export default class PreloadScene extends Scene {
 
     // 设置加载声音基础路径
     this.load.setPath('./assets/sounds')
-    this.load.audio('swapSound','Chomp.wav')
-    this.load.audio('invalidSwapSound', 'Error.wav')
-    this.load.audio('matchSound', 'Ka-Ching.wav')
-    this.load.audio('fallingCookieSound', 'Scrape.wav')
-    this.load.audio('addCookieSound', 'Drip.wav')
-    this.load.audio('bgMusic', 'Mining-by-Moonlight.mp3')
+    this.load.audio('swapSound','chomp.wav')
+    this.load.audio('invalidSwapSound', 'error.wav')
+    this.load.audio('matchSound', 'ka-ching.wav')
+    this.load.audio('fallingCookieSound', 'scrape.wav')
+    this.load.audio('addCookieSound', 'drip.wav')
+    this.load.audio('bgMusic', 'mining-by-moonlight.mp3')
   }
 
   create() {
