@@ -4,8 +4,8 @@
   "description": "match3 game implemented with Phaser3",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "webpack"
+    "start": "npm run dev",
+    "dev": "webpack-dev-server --config ./webpack.dev.config.js"
   },
   "author": "wusiquan",
   "license": "MIT",
