@@ -2,10 +2,10 @@
 
 - [ ] optimize code
 - [ ] add levels
-- [ ] bonus...
 - [ ] sound
-- [ ] socket.io
+- ~~[ ] bonus... no resource~~
+- ~~[ ] socket.io... no resouce~~
 
 ## Related
-https://github.com/anjmao/phaser-candy-crush
+https://github.com/anjmao/phaser-candy-crush  
 https://github.com/boeledi/flutter_crush
