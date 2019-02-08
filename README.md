@@ -3,8 +3,8 @@
 - [ ] optimize code
 - [ ] add levels
 - [ ] sound
-~~- [ ] bonus... no resource~~
-~~- [ ] socket.io... no resouce~~
+- [ ] ~~bonus... no resource~~
+- [ ] ~~socket.io... no resouce~~
 
 ## Related
 https://github.com/anjmao/phaser-candy-crush  
